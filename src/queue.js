@@ -1,6 +1,3 @@
-const { NotImplementedError } = require('../lib');
-// const { ListNode } = require('../extensions/list-node.js');
-
 /**
  * Implement the Queue with a given interface via linked list (use ListNode extension above).
  *
@@ -13,22 +10,66 @@ const { NotImplementedError } = require('../lib');
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 class Queue {
-  getUnderlyingList() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  constructor() {
+    this.id = `[id=${new Date().toJSON().slice(-4, -1)}] `;
+    console.log(`\n\n${this.id} constructor() - создали очередь`);
+    this.headNode = null;
+    this.tailNode = null;
   }
 
-  enqueue(/* value */) {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  getUnderlyingList() {
+    console.log(`\n${this.id} getUnderlyingList() - получили очередь`);
+    console.log(this.headNode);
+    return this.headNode;
+  }
+
+  getLength() {
+    let length = 0;
+    let pointer = this.headNode;
+    while (pointer !== null) {
+      pointer = pointer.next;
+      length += 1;
+    }
+    return length;
+  }
+
+  enqueue(value) {
+    console.log(`\n${this.id} enqueue(${value}) - добавили элемент в очередь`);
+    const NEW_NODE = {
+      value: value,
+      next: null,
+    };
+
+    const IS_QUEUE_EMPTY = this.getLength() === 0;
+    if (IS_QUEUE_EMPTY) {
+      this.headNode = NEW_NODE;
+      this.tailNode = NEW_NODE;
+      console.log(this.headNode);
+      return;
+    }
+
+    this.tailNode.next = NEW_NODE;
+    this.tailNode = NEW_NODE;
+    console.log(this.headNode);
   }
 
   dequeue() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    console.log(
+      `\n${this.id} dequeue() - получили элемент очереди и уменьшили очередь'`,
+    );
+    if (!this.headNode) {
+      console.log(undefined, "- элемент очереди");
+      console.log(this.headNode);
+      return undefined;
+    }
+    const HEAD_ELEMENT = this.headNode;
+    this.headNode = this.headNode.next;
+    console.log(HEAD_ELEMENT.value, "- элемент очерди");
+    console.log(this.headNode);
+    return HEAD_ELEMENT.value;
   }
 }
 
 module.exports = {
-  Queue
+  Queue,
 };
